@@ -1,42 +1,21 @@
-pipeline{
-  agent any
-  tools {
-      maven "Maven Apache"
-  }
-  stages{
-    //Primero
-    stage('Checkout'){
-      steps{
-        //Clonar repositorio git
-        git url: 'https://github.com/alonlain/prueba.git'
-      }
-    }
+pipeline {
+    agent any
 
-    //Segundo
-    stage('Build'){
-          steps{
-            //Compilar
-            script{
-              //instalar
-              if (!isUnix()){
-                  bat 'mvn -version || echo Maven is not installed'
-              }else{
-                  sh 'mvn -version || echo Maven is not installed'
-              }
-    
-               //Compilar el proyecto
-                sh 'mvn clean install'
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Primera vez...Building..'
             }
-          }
+        }
+        stage('Test') {
+            steps {
+                echo 'Primera vez...Testing..'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Primera vez...Deploying....'
+            }
+        }
     }
-  }
-
-  post{
-      success{
-        echo 'Compilación correcta'
-      }
-      failure{
-        echo 'Cascó'
-      }
-  }
 }
